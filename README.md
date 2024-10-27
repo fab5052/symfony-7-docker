@@ -59,3 +59,6 @@ http://localhost:8090 -> PhpMyAdmin
 
 http://localhost:1080 -> MailerCatcher
 
+##Installer Env Ubuntu WSL2: ##
+
+https://github.com/SCSBalaji/Install-Ubuntu-24.04-using-WSL2?tab=readme-ov-file
