@@ -1,0 +1,45 @@
+# ./docker-compose.yml
+
+services:
+
+    server:
+        build:
+            context: .
+            dockerfile: ./automation/docker/Dockerfile
+        container_name: server
+        volumes:
+            - ./:/var/www/html
+        links:
+            - mysql
+        ports:
+            - 80:80     
+
+    mysql:
+        image: mariadb:${DB_VERSION:-10.4}
+        container_name: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-toor}
+            MYSQL_DATABASE: ${DB_DATABASE:-project}
+            MYSQL_USER: ${DB_USER:-user}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-resu}
+        ports:
+            - ${DB_PORT:-3306}:${DB_PORT:-3306}
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        container_name: phpmyadmin
+        environment:
+            - PMA_HOST=${DB_HOST:-mysql}
+            - PMA_USER=${DB_USER:-user}
+            - PMA_PASSWORD=${DB_PASSWORD:-resu}
+        links:
+            - mysql
+        ports:
+            - 8090:80
+
+    mailer:
+        image: schickling/mailcatcher
+        container_name: mailcatcher
+        ports: 
+            - 1025:1025
+            - 1080:1080
