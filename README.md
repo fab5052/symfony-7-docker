@@ -5,16 +5,19 @@ cd ~
 
 mkdir -p workstation/symfony-7-docker
 
-cd workstation/contribution-blog-symfony-7-docker
+######################################################################
 
-mkdir -p automation/docker && cd automation/docker
+copier-coller dossier 'automation'
 
-touch Dockerfile
 
-docker-compose build
+######################################################################
 
-docker-compose up
 
+sudo docker-compose build
+
+sudo docker-compose up
+
+######################################################################
 
 docker exec -ti blog-server /bin/bash
 
@@ -46,7 +49,7 @@ Note  The command console can use a different php.ini file
 
 ->............# rmdir temp-symfony
 
-[user@...] # docker-compose up
+[user@...] # sudo docker-compose up
 
 END.
 
@@ -61,4 +64,3 @@ http://localhost:1080 -> MailerCatcher
 
 ##Installer Env Ubuntu WSL2: ##
 
-https://github.com/SCSBalaji/Install-Ubuntu-24.04-using-WSL2?tab=readme-ov-file
