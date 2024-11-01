@@ -1,27 +1,27 @@
 # symfony-7-docker
-Installation Environnement Symfony7 sous Docker
+Installation Environnement Symfony 7 et principaux composants sous Docker
 
-cd ~
+[user@...] # cd ~
 
-mkdir -p workstation/symfony-7-docker
-
-######################################################################
-
-copier-coller dossier 'automation'
-
+[user@...] # mkdir -p workstation/symfony-7-docker
 
 ######################################################################
 
 
-sudo docker-compose build
+copier-coller le dossier 'automation'(docker et script)   &&  fichier 'docker-compose.yml' -> /!\ à la racine du projet
 
-sudo docker-compose up
 
 ######################################################################
 
-docker exec -ti blog-server /bin/bash
+[user@...] # sudo docker-compose build
 
-!-> [root@....] # symfony check:requirements
+[user@...] # sudo docker-compose up
+
+######################################################################
+
+[user@...] # docker exec -ti server /bin/bash
+
+/!\ --> [root@....] # symfony check:requirements
 
 --> Symfony Requirements Checker:
 
@@ -42,6 +42,7 @@ Note  The command console can use a different php.ini file
 ~~~~  than the one used by your web server.
       Please check that both the console and the web server
       are using the same PHP version and configuration.
+######################################################################
 
 -> [root@...] # symfony new ./temp-symfony --version="7.0.*" --webapp
 
@@ -49,11 +50,13 @@ Note  The command console can use a different php.ini file
 
 ->............# rmdir temp-symfony
 
+######################################################################
+
 [user@...] # sudo docker-compose up
 
 END.
 
-
+######################################################################
 Essayer les containers:
 
 http://localhost -> Synfony7
