@@ -19,7 +19,7 @@ copier-coller le dossier 'automation'(docker et script)   &&  fichier 'docker-co
 
 ######################################################################
 
-[user@...] # docker exec -ti server /bin/bash
+[user@...] # sudo docker exec -ti server /bin/bash
 
 /!\ --> [root@....] # symfony check:requirements
 
