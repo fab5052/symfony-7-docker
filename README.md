@@ -1,4 +1,10 @@
 # symfony-7-docker
+git add .
+git commit -m "Make the output digits variable"
+git tag -a 0.1.1 -m "Make the output digits variable"
+git push 
+git push --tags
+
 Installation Environnement Symfony 7 et principaux composants sous Docker
 
 [user@...] # cd ~
