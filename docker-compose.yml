@@ -2,7 +2,7 @@
 
 services:
 
-    server:
+ server:
         build:
             context: .
             dockerfile: ./automation/docker/Dockerfile
@@ -12,20 +12,37 @@ services:
         links:
             - mysql
         ports:
-            - 81:80     
+            - 81:80  
 
-    mysql:
-        image: mariadb:${DB_VERSION:-10.4}
-        container_name: mysql
+ dev:
+    image: bricefa5052/symfony-7-docker:latest
+    command: sleep infinity
+    volumes:
+      - ../.:/workspace
+    ports:
+      - "${BACKEND_PORT:-8080}:80"
+    environment:
+      DATABASE_URL: "mysql://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-!ChangeMe!}@database:3306/${MYSQL_DATABASE:-app}"
+      MAILER_DSN: "smtp://mailer:1025"   
+
+ mysql:
+        image: mysql:${MYSQL_VERSION:-8}-oracle
         environment:
-            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-toor}
-            MYSQL_DATABASE: ${DB_DATABASE:-project}
-            MYSQL_USER: ${DB_USER:-user}
-            MYSQL_PASSWORD: ${DB_PASSWORD:-resu}
+            MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-!ChangeMe!}
+            MYSQL_USER: ${MYSQL_USER:-app}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-!RootChangeMe!}
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            timeout: 5s
+            retries: 5
+            start_period: 60s
+        volumes:
+        - database_data:/var/lib/mysql:rw
         ports:
-            - ${DB_PORT:-3306}:${DB_PORT:-3306}
+        - "${DB_PORT:-3306}:3306"
 
-    phpmyadmin:
+ phpmyadmin:
         image: phpmyadmin:latest
         container_name: phpmyadmin
         environment:
@@ -37,9 +54,12 @@ services:
         ports:
             - 8090:80
 
-    mailer:
+ mailer:
         image: schickling/mailcatcher
         container_name: mailcatcher
         ports: 
             - 1025:1025
             - 1080:1080
+
+volumes:
+  database_data:
