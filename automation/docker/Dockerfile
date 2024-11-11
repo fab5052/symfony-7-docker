@@ -68,3 +68,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Run
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
+
+COPY entrypoint.sh /usr/bin/entrypoint
+RUN chmod +x /usr/bin/entrypoint
+
+ENTRYPOINT ["entrypoint"]

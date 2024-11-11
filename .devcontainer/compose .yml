@@ -10,7 +10,7 @@ services:
     volumes:
             - ./:/var/www/html
     links:
-            - database
+            # - database
     ports:
        - "${BACKEND_PORT:-81}:80"
 
