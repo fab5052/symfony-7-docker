@@ -41,8 +41,8 @@ COPY . /var/www/
 
 # Add vhost
 COPY ./automation/docker/default-vhost.conf /etc/apache2/sites-available/
-#RUN a2dissite 000-default.conf \
- #   && a2ensite default-vhost.conf 
+RUN a2dissite 000-default.conf \
+   && a2ensite default-vhost.conf 
 
 # Symfony CLI
 # RUN wget https://get.symfony.com/cli/installer -O - | bash \
@@ -70,11 +70,11 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add Entrypoint
-# COPY ./automation/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY ./automation/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Run
-# CMD ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
 
 COPY entrypoint.sh /usr/bin/entrypoint
 RUN chmod +x /usr/bin/entrypoint

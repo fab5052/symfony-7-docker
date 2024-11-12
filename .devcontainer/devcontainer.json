@@ -14,7 +14,7 @@
         }
     },
     "forwardPorts": [
-        "dev:80",
+        "dev:8080",
         "mailer:8025"
     ]
 }
