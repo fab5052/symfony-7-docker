@@ -1,6 +1,6 @@
 {
     "name": "Symfony Dev Container",
-    "dockerComposeFile": "docker-compose.yml",
+    "dockerComposeFile": "compose.yml",
     "service": "dev",
     "workspaceFolder": "/workspace",
     "shutdownAction": "stopCompose",
