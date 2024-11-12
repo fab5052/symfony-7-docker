@@ -79,13 +79,13 @@ CMD ["/usr/local/bin/docker-entrypoint.sh"]
 COPY entrypoint.sh /usr/bin/entrypoint
 RUN chmod +x /usr/bin/entrypoint
 
-RUN cd /var/www && \
-    composer install && \
-    npm install --force && \
-    npm run build
+# RUN cd /var/www && \
+#     composer install && \
+#     npm install --force && \
+#     npm run build
     
 WORKDIR /var/www/
 
-ENTRYPOINT ["bash", "docker.sh", "entrypoint"]
+ENTRYPOINT ["bash", "docker.sh"]
 
 EXPOSE 80
