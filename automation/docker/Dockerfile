@@ -29,13 +29,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
  
 
 # Copy php.ini
-# RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
-#     && echo 'short_open_tag = Off' >> /usr/local/etc/php/php.ini 
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
+    && echo 'short_open_tag = Off' >> /usr/local/etc/php/php.ini 
 
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
-   mv composer.phar /usr/local/bin/composer
+# RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
+#    mv composer.phar /usr/local/bin/composer
 
-RUN apt update && apt install -yqq nodejs npm
+# RUN apt update && apt install -yqq nodejs npm
 
 COPY . /var/www/
 
@@ -79,10 +79,10 @@ CMD ["/usr/local/bin/docker-entrypoint.sh"]
 COPY entrypoint.sh /usr/bin/entrypoint
 RUN chmod +x /usr/bin/entrypoint
 
-# RUN cd /var/www && \
+RUN cd /var/www && \
 #     composer install && \
-#     npm install --force && \
-#     npm run build
+     npm install --force && \
+     npm run build
     
 WORKDIR /var/www/
 

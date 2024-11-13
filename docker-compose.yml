@@ -20,35 +20,35 @@ services:
     volumes:
       - ../.:/workspace
     ports:
-      - "${BACKEND_PORT:-8080}:80"
+      - "${BACKEND_PORT:-80}:80"
     environment:
-      DATABASE_URL: "mysql://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-!ChangeMe!}@database:3306/${MYSQL_DATABASE:-app}"
+      DATABASE_URL: "mysql://${MYSQL_USER:-admin}:${MYSQL_PASSWORD:-Afpa1234}@database:3306/${MYSQL_DATABASE:-green-village}"
       MAILER_DSN: "smtp://mailer:1025"   
 
  mysql:
-        image: mysql:${MYSQL_VERSION:-8}-oracle
-        environment:
-            MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-!ChangeMe!}
-            MYSQL_USER: ${MYSQL_USER:-app}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-toor}
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 5s
-            retries: 5
-            start_period: 60s
-        volumes:
-        - database_data:/var/lib/mysql:rw
-        ports:
-        - "${DB_PORT:-3307}:3306"
+    image: mysql:${MYSQL_VERSION:-8}-oracle
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-green-village}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-Afpa1234}
+      MYSQL_USER: ${MYSQL_USER:-admin}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-toor}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - database_data:/var/lib/mysql:rw
+    ports:
+      - "${DB_PORT:-3307}:3306"
 
  phpmyadmin:
         image: phpmyadmin:latest
         container_name: phpmyadmin
         environment:
             - PMA_HOST=${DB_HOST:-mysql}
-            - PMA_USER=${DB_USER:-user}
-            - PMA_PASSWORD=${DB_PASSWORD:-resu}
+            - PMA_USER=${DB_USER:-admin}
+            - PMA_PASSWORD=${DB_PASSWORD:-Afpa1234}
         links:
             - mysql
         ports:
