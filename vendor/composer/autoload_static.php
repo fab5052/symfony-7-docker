@@ -32,6 +32,10 @@ class ComposerStaticInit2e074b178cf99c894ccdda33ec3f7bde
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'c' => 
+        array (
+            'cweagans\\Composer\\' => 18,
+        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -171,6 +175,10 @@ class ComposerStaticInit2e074b178cf99c894ccdda33ec3f7bde
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'cweagans\\Composer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
