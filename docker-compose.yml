@@ -40,7 +40,7 @@ services:
         volumes:
         - database_data:/var/lib/mysql:rw
         ports:
-        - "${DB_PORT:-3306}:3306"
+        - "${DB_PORT:-3307}:3306"
 
  phpmyadmin:
         image: phpmyadmin:latest
