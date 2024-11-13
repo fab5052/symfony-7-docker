@@ -3,29 +3,29 @@
 # Base
 FROM php:8.3.7-apache-bookworm
 
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+# ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
     
-# Softwares
-RUN apt-get update && apt-get install -y \
-    acl \
-    libicu-dev \
-    nano \
-    wget \
-    zip\
-    git
+# # Softwares
+# RUN apt-get update && apt-get install -y \
+#     acl \
+#     libicu-dev \
+#     nano \
+#     wget \
+#     zip\
+#     git
 
-# Apache modules
-RUN a2enmod \
-    rewrite \
-    expires \
-    headers
+# # Apache modules
+# RUN a2enmod \
+#     rewrite \
+#     expires \
+#     headers
 
-# Extension PHP
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions \
-    pdo_mysql \
-    intl
-#    opcache \
+# # Extension PHP
+# RUN chmod +x /usr/local/bin/install-php-extensions && \
+#     install-php-extensions \
+#     pdo_mysql \
+#     intl \
+#     opcache 
  
 
 # Copy php.ini
@@ -43,11 +43,13 @@ COPY . /var/www/
 COPY ./automation/docker/default-vhost.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default.conf \
    && a2ensite default-vhost.conf 
+ 
 
 # Symfony CLI
-# RUN wget https://get.symfony.com/cli/installer -O - | bash \
-#     && chmod +x /root/.symfony5/bin/symfony \
+#RUN wget https://get.symfony.com/cli/installer -O - | bash \
+#      && chmod +x /root/.symfony5/bin/symfony \
 #     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
 
 # Composer
 # COPY ./automation/scripts/composer-setup.sh /tmp
@@ -60,10 +62,10 @@ RUN pear config-set http_proxy "${http_proxy}" \
 RUN echo "extension=apcu.so\napc.enable_cli=on" > /usr/local/etc/php/conf.d/apcu.ini
 
 # X-Debug
-RUN pecl install xdebug-3.3.2 \
-    && echo 'xdebug.mode=develop,debug,coverage' >> /usr/local/etc/php/php.ini \
-    && echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/php.ini \
-    && docker-php-ext-enable xdebug
+# RUN pecl install xdebug-3.3.2 \
+#     && echo 'xdebug.mode=develop,debug,coverage' >> /usr/local/etc/php/php.ini \
+#     && echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/php.ini \
+#     && docker-php-ext-enable xdebug
 
 # Clean the mess
 RUN apt-get clean \
@@ -79,12 +81,13 @@ CMD ["/usr/local/bin/docker-entrypoint.sh"]
 COPY entrypoint.sh /usr/bin/entrypoint
 RUN chmod +x /usr/bin/entrypoint
 
-RUN cd /var/www && \
-#     composer install && \
-     npm install --force && \
-     npm run build
+RUN cd /var/www/ 
+#&& \
+# #     composer install && \
+#      npm install --force && \
+#      npm run build
     
-WORKDIR /var/www/
+WORKDIR /var/www/html
 
 ENTRYPOINT ["bash", "docker.sh"]
 

@@ -15,7 +15,7 @@ Installation Environnement Symfony 7 et principaux composants sous Docker
 
 
 copier-coller le dossier 'automation'(docker et script)   &&  fichier 'docker-compose.yml' -> /!\ à la racine du projet
-
+ 
 
 ######################################################################
 

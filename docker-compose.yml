@@ -16,11 +16,11 @@ services:
 
  dev:
     image: bricefa5052/symfony-7-docker:latest
-    command: restart
+    command: sleep infinity
     volumes:
-      - ../.:/workspace
+      - ../.:/wsl:rw
     ports:
-      - "${BACKEND_PORT:-80}:80"
+      - "${BACKEND_PORT:-8080}:80"
     environment:
       DATABASE_URL: "mysql://${MYSQL_USER:-admin}:${MYSQL_PASSWORD:-Afpa1234}@database:3306/${MYSQL_DATABASE:-green-village}"
       MAILER_DSN: "smtp://mailer:1025"   
@@ -40,7 +40,7 @@ services:
     volumes:
       - database_data:/var/lib/mysql:rw
     ports:
-      - "${DB_PORT:-3307}:3306"
+      - "${DB_PORT:-3307}:3306" 
 
  phpmyadmin:
         image: phpmyadmin:latest

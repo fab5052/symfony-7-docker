@@ -1,8 +1,8 @@
 {
     "name": "Symfony Dev Container",
-    "dockerComposeFile": "docker-compose.yml",
+    "dockerComposeFile": "compose.yml",
     "service": "dev",
-    "workspaceFolder": "/workspace",
+    "workspaceFolder": "/",
     "shutdownAction": "stopCompose",
     "customizations": {
         "vscode": {
@@ -14,7 +14,7 @@
         }
     },
     "forwardPorts": [
-        "dev:80",
+        "dev:8080",
         "mailer:8025"
     ]
 }
