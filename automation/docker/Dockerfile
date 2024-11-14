@@ -32,10 +32,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
     && echo 'short_open_tag = Off' >> /usr/local/etc/php/php.ini 
 
+    # Installe Composer manuellement
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 #    mv composer.phar /usr/local/bin/composer
 
-# RUN apt update && apt install -yqq nodejs npm
+RUN apt update && apt install -yqq nodejs npm
 
 COPY . /var/www/
 
@@ -76,16 +79,20 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 # Run
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
 
-COPY entrypoint.sh /usr/bin/entrypoint
-RUN chmod +x /usr/bin/entrypoint
+# COPY entrypoint.sh /usr/bin/entrypoint
+# RUN chmod +x /usr/bin/entrypoint
 
-RUN cd /var/www && \
-#     composer install && \
-     npm install --force && \
-     npm run build
+WORKDIR /var/www
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs 
+
+RUN apt-get update && apt-get install -f -y
     
-WORKDIR /var/www/
+WORKDIR /var/www/html
 
-ENTRYPOINT ["bash", "docker.sh"]
+ENTRYPOINT ["bash", "docker-entrypoint.sh"]
 
 EXPOSE 80
