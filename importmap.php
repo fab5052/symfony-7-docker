@@ -25,4 +25,10 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'doctrine' => [
+        'version' => '3.0.0',
+    ],
+    'esutils' => [
+        'version' => '2.0.3',
+    ],
 ];
