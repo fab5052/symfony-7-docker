@@ -1,8 +1,7 @@
-# ./docker-compose.yml
 
 services:
 
- server:
+  server:
         build:
             context: .
             dockerfile: ./automation/docker/Dockerfile
@@ -12,7 +11,53 @@ services:
         links:
             - mysql
         ports:
-            - 81:80  
+            - 81:80 
+#       environment:    
+#          DATABASE_URL: "database://${MYSQL_USER:- user}:${MYSQL_PASSWORD:- pwd}@database:3306/${MYSQL_DATABASE:- app}"
+
+###> doctrine/doctrine-bundle ###
+  mysql:
+    image: mysql:${MYSQL_VERSION:-8}
+    container_name: mysql
+    restart: always
+    environment:
+        MYSQL_DATABASE: appdb
+        MYSQL_PASSWORD: Afpa1234
+        MYSQL_USER: admin
+        MYSQL_ROOT_PASSWORD: toor
+    # healthcheck:
+    #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    #     timeout: 5s
+    #     retries: 5
+    #     start_period: 60s
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+        - 3307:3306
+  
+  phpmyadmin:
+          image: phpmyadmin/phpmyadmin
+          container_name: phpmyadmin
+          depends_on:
+             - mysql
+          restart: always
+          environment:
+             PMA_HOST: mysql
+            #  PMA_USER: admin
+            #  PMA_PASSWORD: Afpa1234
+             MYSQL_ROOT_PASSWORD: toor
+          links:
+              - mysql
+          ports:
+              - 8090:80
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  mysql_data:
+###< doctrine/doctrine-bundle ### 
 
 #  dev:
 #     image: bricefa5052/symfony-7-docker:latest
@@ -25,58 +70,3 @@ services:
 #       DATABASE_URL: "mysql://${MYSQL_USER:-admin}:${MYSQL_PASSWORD:-Afpa1234}@database:3306/${MYSQL_DATABASE:-green-village}"
 #       MAILER_DSN: "smtp://mailer:1025"   
 
- mysql:
-    image: mysql:${MYSQL_VERSION:-8}-oracle
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-green-village}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-Afpa1234}
-      MYSQL_USER: ${MYSQL_USER:-admin}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-toor}
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 5
-      start_period: 60s
-    volumes:
-      - database_data:/var/lib/mysql:rw
-    ports:
-      - "${DB_PORT:-3307}:3306" 
-
- phpmyadmin:
-        image: phpmyadmin:latest
-        container_name: phpmyadmin
-        environment:
-            - PMA_HOST=${DB_HOST:-mysql}
-            - PMA_USER=${DB_USER:-admin}
-            - PMA_PASSWORD=${DB_PASSWORD:-Afpa1234}
-        links:
-            - mysql
-        ports:
-            - 8090:80
-
- mailer:
-        image: schickling/mailcatcher
-        container_name: mailcatcher
-        ports: 
-            - 1025:1025
-            - 1080:1080
-
-###> doctrine/doctrine-bundle ###
-#  database:
-#    image: postgres:${POSTGRES_VERSION:-16}-alpine
-#    environment:
-#      POSTGRES_DB: ${POSTGRES_DB:-app}
-#      # You should definitely change the password in production
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-#      POSTGRES_USER: ${POSTGRES_USER:-app}
-#    volumes:
-#      - database_data:/var/lib/postgresql/data:rw
-     # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-     # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
-
-volumes:
-  database_data:
-###> doctrine/doctrine-bundle ###
-
-###< doctrine/doctrine-bundle ###
