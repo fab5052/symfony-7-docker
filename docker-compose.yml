@@ -21,7 +21,7 @@ services:
     container_name: mysql
     restart: always
     environment:
-        MYSQL_DATABASE: appdb
+        MYSQL_DATABASE: app
         MYSQL_PASSWORD: Afpa1234
         MYSQL_USER: admin
         MYSQL_ROOT_PASSWORD: toor
@@ -57,16 +57,4 @@ services:
 volumes:
 ###> doctrine/doctrine-bundle ###
   mysql_data:
-###< doctrine/doctrine-bundle ### 
-
-#  dev:
-#     image: bricefa5052/symfony-7-docker:latest
-#     command: sleep infinity
-#     volumes:
-#       - ../.:/workspace
-#     ports:
-#       - "${BACKEND_PORT:-80}:80"
-#     environment:
-#       DATABASE_URL: "mysql://${MYSQL_USER:-admin}:${MYSQL_PASSWORD:-Afpa1234}@database:3306/${MYSQL_DATABASE:-green-village}"
-#       MAILER_DSN: "smtp://mailer:1025"   
-
+###< doctrine/doctrine-bundle ###
